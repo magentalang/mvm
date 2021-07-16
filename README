@@ -2,12 +2,6 @@
 
 mvm, magenta virtual machine, is a bytecode interpreter for magenta
 
-code is written assuming the following type sizes:
-(u)char  ==  8 bits
-(u)short == 16 bits
-(u)int   == 32 bits
-(u)long  == 64 bits
-
 # basic specs
 
 instruction set: 48 (- 5 noops = 43) instructions (0x00-2F)
@@ -123,15 +117,15 @@ A and B if you would like to avoid integer overflows.
  01 | push bytes | following program bytes will be pushed to stack
  02 | destr. pop | destructive pop, remove from the stack without setting a reg.
  03 | convert #  | convert last memory width to ascii number string
-!04 | reverse st | reverses a string, ignores null byte at front of str if any
- 05 |            |
+!04 | convert 0x | convert last memory width to ascii hexadecimal string
+!05 | reverse st | reverses a string, ignores null byte at front of str if any
  06 | add        | push answer of A + B to stack
  07 | subtract   | push answer of A - B to stack
 ----|------------|--------------------------------------------------------------
  08 | greater    | if A isn't greater than B then jump to s0
  09 | equal      | if A isn't equal to B then jump to s0
- 0A |            |
- 0B |            |
+!0A | wait on th | wait for threaded subroutine(s) above current to finish
+!0B | jmp to th  | jumps to a subroutine, executes in seperate stack space/thred
  0C | jump       | set program counter to s0
  0D | jmp to sub | set program counter to s0 and push old counter to call stack
  0E | exit       | exits the program
@@ -142,7 +136,7 @@ A and B if you would like to avoid integer overflows.
  12 | pointr loc | push memory pointer location byte(s) to stack
  13 |            |
  14 | read block | push a byte width of memory data to stack
-!15 | read str   | pushes bytes to stack from memory until 0x00 is found
+ !15 | read str   | pushes bytes to stack from memory until 0x00 is found
  16 | write blck | pop byte(s) from stack and write block to pointer locations
 !17 | write str  | pop bytes from stack to pointer locations until 0x00
 !18 | write byte | pop byte(s) from stack and write byte(s) to pointer location
@@ -159,17 +153,17 @@ A and B if you would like to avoid integer overflows.
  21 | depop A    | pushes the value in A to stack without clearing A
  22 | pop to B   | pop byte(s) from stack to B register
  23 | depop B    | pushes the value in B to stack without clearing B
-!24 | pop to C   | pop byte(s) from stack to C register
-!25 | depop C    | pushes the value in C to stack without clearing C
-!26 | pop to D   | pop byte(s) from stack to D register
-!27 | depop D    | pushes the value in D to stack without clearing D
-!28 | pop to E   | pop byte(s) from stack to E register
-!29 | depop E    | pushes the value in E to stack without clearing E
-!2A | pop to F   | pop byte(s) from stack to F register
-!2B | depop F    | pushes the value in F to stack without clearing F
-!2C | pop to G   | pop byte(s) from stack to G register
-!2D | depop G    | pushes the value in G to stack without clearing G
-!2E | pop to H   | pop byte(s) from stack to H register
-!2F | depop H    | pushes the value in H to stack without clearing H
+ 24 | pop to C   | pop byte(s) from stack to C register
+ 25 | depop C    | pushes the value in C to stack without clearing C
+ 26 | pop to D   | pop byte(s) from stack to D register
+ 27 | depop D    | pushes the value in D to stack without clearing D
+ 28 | pop to E   | pop byte(s) from stack to E register
+ 29 | depop E    | pushes the value in E to stack without clearing E
+ 2A | pop to F   | pop byte(s) from stack to F register
+ 2B | depop F    | pushes the value in F to stack without clearing F
+ 2C | pop to G   | pop byte(s) from stack to G register
+ 2D | depop G    | pushes the value in G to stack without clearing G
+ 2E | pop to H   | pop byte(s) from stack to H register
+ 2F | depop H    | pushes the value in H to stack without clearing H
 ----|------------|--------------------------------------------------------------
  0x | opcode     | notes

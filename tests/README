@@ -1,0 +1,35 @@
+# tests
+
+these tests verify if the latest mvm build has been successful by making sure it
+still works as intended. all of these tests are run and their stdout is compared
+again an expected output .txt of the same name by the test script.
+
+[hello world.magneta]
+  writes "Hello, World!"
+
+[registers.magenta]
+  pops data into all 8 registers, and depops all 8 registers in reverse
+
+[math.magenta]
+  tests the addition and subtraction commands from 1 through 8 byte byte widths
+[logic.magenta]
+  tests the greater and equal logic commands
+
+[jmp.magenta]
+  print 0-255 on screen then exit
+[jmpsub.magenta]
+  writes "Hello, Subroutines!", using subroutines
+
+[memory.magenta]
+  tests reading/writing blocks from different points in memory
+
+[iobus memory.magenta]
+  test allocating additional memory via. the io bus
+[iobus stdio.magenta]
+  test reading from stdin and writing to stdout and stderr
+[iobus generic file.magenta]
+  test reading and writing from a file
+
+[strings.magenta]
+  test conversion commands, reversing command, and the memory string read/write
+  commands.

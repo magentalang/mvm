@@ -250,7 +250,7 @@ int main(int argc, char *argv[]) {
 					}
 				} break;
 
-				// memory read byte
+				// memory read block
 				case 0x14: {
 					if (width == 1) {
 						stack_push(sstack, mmemory[mpointer]);
@@ -272,6 +272,19 @@ int main(int argc, char *argv[]) {
 						stack_push(sstack, mmemory[mpointer + 1]);
 						stack_push(sstack, mmemory[mpointer]);
 					}
+				} break;
+
+				// memory read string
+				case 0x15: {
+					int strend = 0; // string end
+					int strsrt = mpointer; // string start
+					char* string;
+
+					for (unsigned long i = mpointer; mmemory[i] != 0x00; i++)
+						strend = i;
+
+					for (unsigned long i = strend; i >= strsrt; i--)
+						stack_push(sstack, mmemory[i]);
 				} break;
 
 				// memory write block

@@ -7,8 +7,8 @@ build:
 	$(CC) $(CFLAGS) src/util.c src/stack.c main.c -o .bin/mvm
 
 test: build
-	@echo "==> running test"
-	@./.bin/mvm test.magenta
+	@echo "==> running tests"
+	@node tests/test
 
 run: build
 	@echo "==> running"
