@@ -23,13 +23,13 @@ again an expected output .txt of the same name by the test script.
 [memory.magenta]
   tests reading/writing blocks from different points in memory
 
+[strings.magenta]
+  test conversion commands, reversing command, and the memory string read/write
+  commands.
+
 [iobus memory.magenta]
   test allocating additional memory via. the io bus
 [iobus stdio.magenta]
   test reading from stdin and writing to stdout and stderr
 [iobus generic file.magenta]
   test reading and writing from a file
-
-[strings.magenta]
-  test conversion commands, reversing command, and the memory string read/write
-  commands.
