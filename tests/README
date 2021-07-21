@@ -7,18 +7,37 @@ again an expected output .txt of the same name by the test script.
 [hello world.magneta]
   writes "Hello, World!"
 
-[registers.magenta]
+[registers 8.magenta]
   pops data into all 8 registers, and depops all 8 registers in reverse
+[registers 16.magenta]
+  the first test but with 16-bit registers
+[registers 32.magenta]
+  the first test but with 32-bit registers
+[registers 64.magenta]
+  the first test but with 64-bit registers
 
-[math.magenta]
-  tests the addition and subtraction commands from 1 through 8 byte byte widths
-[logic.magenta]
+[math 8.magenta]
+  tests the addition and subtraction commands.
+[math 16.magenta]
+  the first test but with 16-bit registers
+[math 32.magenta]
+  the first test but with 32-bit registers
+[math 64.magenta]
+  the first test but with 64-bit registers
+
+[logic 8.magenta]
   tests the greater and equal logic commands
+[logic 16.magenta]
+  the first test but with 16-bit registers
+[logic 32.magenta]
+  the first test but with 32-bit registers
+[logic 64.magenta]
+  the first test but with 64-bit registers
 
 [jmp.magenta]
   print 0-255 on screen then exit
 [jmpsub.magenta]
-  writes "Hello, Subroutines!", using subroutines
+  writes "Hello, World!", except with subroutines
 
 [memory.magenta]
   tests reading/writing blocks from different points in memory
