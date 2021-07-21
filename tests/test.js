@@ -29,13 +29,14 @@ tests.forEach(t => {
 		});
 	});
 });
-
 // print results
 function done() {
+	// if not all tests have been run yet
 	ranTests++;
-	if (ranTests != tests.length)
-		return;
-
+	if (ranTests != tests.length) return;
+	// alphabetical sort
+	passedTests = passedTests.sort((a, b) => a.localeCompare(b));
+	failedTests = failedTests.sort((a, b) => a[0].localeCompare(b[0]));
 	if (passedTests.length > 0) {
 		console.log(`==> ${passedTests.length} successful tests:`);
 		passedTests.forEach(t => console.log("\033[32;1m✓\033[m", t));
