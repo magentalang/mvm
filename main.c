@@ -10,7 +10,7 @@
 #include <string.h>
 #include "stack.h"
 #include "util.h"
-
+#include <unistd.h>
 void usage() {
 	printf("usage: mvm [-h] file\n");
 	printf("\t-h --help\tprints usage information\n");
@@ -95,7 +95,6 @@ int main(int argc, char *argv[]) {
 		switch (mode) {
 			case normal: switch (c) {
 				// noops
-				case 0x05:
 				case 0x0A: case 0x0B:
 				case 0x11: case 0x13:
 				case 0x1F: break;
@@ -136,7 +135,7 @@ int main(int argc, char *argv[]) {
 					unsigned long b = nth_byte(0, registerB);
 
 					if (width == 1) {
-						stack_push(sstack, c == 0x08 ? (unsigned char)a + (unsigned char)b : (unsigned char)a - (unsigned char)b);
+						stack_push(sstack, c == 0x06 ? (unsigned char)a + (unsigned char)b : (unsigned char)a - (unsigned char)b);
 						break;
 					}
 
@@ -145,7 +144,7 @@ int main(int argc, char *argv[]) {
 					b = b | nth_byte(1, registerB) << 8;
 
 					if (width == 2) {
-						unsigned short sum = c == 0x08 ? (unsigned short)a + (unsigned short)b : (unsigned short)a - (unsigned short)b;
+						unsigned short sum = c == 0x06 ? (unsigned short)a + (unsigned short)b : (unsigned short)a - (unsigned short)b;
 						stack_push(sstack, nth_byte(1, sum));
 						stack_push(sstack, nth_byte(0, sum));
 						break;
@@ -156,7 +155,7 @@ int main(int argc, char *argv[]) {
 					b = b | nth_byte(2, registerB) << 16 | nth_byte(3, registerB) << 24;
 
 					if (width == 4) {
-						unsigned int sum = c == 0x08 ? (unsigned int)a + (unsigned int)b : (unsigned int)a - (unsigned int)b;
+						unsigned int sum = c == 0x06 ? (unsigned int)a + (unsigned int)b : (unsigned int)a - (unsigned int)b;
 						stack_push(sstack, nth_byte(3, sum));
 						stack_push(sstack, nth_byte(2, sum));
 						stack_push(sstack, nth_byte(1, sum));
@@ -169,7 +168,7 @@ int main(int argc, char *argv[]) {
 					b = b | nth_byte(4, registerB) << 32 | nth_byte(5, registerB) << 40 | nth_byte(6, registerB) << 48 | nth_byte(7, registerB) << 56;
 
 					if (width == 8) {
-						unsigned long sum = c == 0x08 ? (unsigned long)a + (unsigned long)b : (unsigned long)a - (unsigned long)b;
+						unsigned long sum = c == 0x06 ? (unsigned long)a + (unsigned long)b : (unsigned long)a - (unsigned long)b;
 						stack_push(sstack, nth_byte(7, sum));
 						stack_push(sstack, nth_byte(6, sum));
 						stack_push(sstack, nth_byte(5, sum));
@@ -188,13 +187,10 @@ int main(int argc, char *argv[]) {
 					unsigned long newcounter;
 					stack_pop_width(sstack, width, &newcounter);
 
-					if (c == 0x08) {
-						condition = registerA > registerB;
-					} else if (c == 0x09) {
-						condition = registerA == registerB;
-					}
+					     if (c == 0x08) condition = registerA > registerB;
+					else if (c == 0x09) condition = registerA == registerB;
 
-					if (condition == 0) {
+					if (condition == 1) {
 						counter = newcounter - 1;
 					}
 				} break;

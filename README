@@ -122,10 +122,10 @@ A and B if you would like to avoid integer overflows.
  06 | add        | push answer of A + B to stack
  07 | subtract   | push answer of A - B to stack
 ----|------------|--------------------------------------------------------------
- 08 | greater    | if A isn't greater than B then jump to s0
- 09 | equal      | if A isn't equal to B then jump to s0
-!0A | wait on th | wait for threaded subroutine(s) above current to finish
-!0B | jmp to th  | jumps to a subroutine, executes in seperate stack space/thred
+ 08 | greater    | if A is greater B then jump to s0
+ 09 | equal      | if A is equal to B then jump to s0
+ 0A |            |
+ 0B |            |
  0C | jump       | set program counter to s0
  0D | jmp to sub | set program counter to s0 and push old counter to call stack
  0E | exit       | exits the program
@@ -136,7 +136,7 @@ A and B if you would like to avoid integer overflows.
  12 | pointr loc | push memory pointer location byte(s) to stack
  13 |            |
  14 | read block | push a byte width of memory data to stack
- !15 | read str   | pushes bytes to stack from memory until 0x00 is found
+!15 | read str   | pushes bytes to stack from memory until 0x00 is found
  16 | write blck | pop byte(s) from stack and write block to pointer locations
 !17 | write str  | pop bytes from stack to pointer locations until 0x00
 !18 | write byte | pop byte(s) from stack and write byte(s) to pointer location
